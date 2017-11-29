@@ -1,0 +1,55 @@
+#!/bin/bash
+
+DIR_PATH=$1
+T_FEATURE="LBP"
+T_MAXFALSE=0.1
+T_W=24
+T_H=24
+T_MINHIT=0.97
+T_NUMSTAGES=5
+
+usage_exit() {
+    echo "Usage: $0 [-f feature type] [-w width] [-h height] [-m minHitRate] [-s numStages] dir_path"
+    exit 1
+}
+
+while getopts f:w:h:m:s: OPT
+do
+    case $OPT in
+        f)  $OPTARG
+            ;;       
+        w)  T_W=$OPTARG
+            ;;
+        h)  T_H=$OPTARG
+            ;;
+        m)  T_MINHIT=$OPTARG
+	      ;;
+        s)  T_NUMSTAGES=$OPTARG
+            ;;
+        \?)  usage_exit
+             ;;
+    esac
+done
+
+shift $((OPTIND -1))
+
+T_DATA="$1/data/mdoel"
+T_VEC="$1/src/positive.vec"
+T_BG="$1/src/neg.txt"
+T_NUMPOS=`wc -l $1/src/pos.txt | cut -d ' ' -f1`
+T_NUMNEG=`wc -l $1/src/neg.txt | cut -d ' ' -f1`
+
+$DIR_PATH/data
+
+opencv_traincascade \
+-data $DIR_PATH/data/model \
+-vec $DIR_PATH/src/positive.vec \
+-bg $DIR_PATH/src/neg.txt \
+-numPos $T_NUMPOS \
+-numNeg $T_NUMNEG \
+-featureType $T_FEATURE \
+-maxFalseAlarmRate $T_MINHIT \
+-w $T_W \
+-h $T_H \
+-minHitRate $T_MINHIT \
+-numStages $T_NUMSTAGES

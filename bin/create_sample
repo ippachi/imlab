@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ $# -ne 3 ]; then
+	echo 'Usage: "create_sample dir_path width height"'
+	exit 1
+fi
+
+opencv_createsamples -info $1/src/pos.txt -vec $1/src/positive.vec -w $2 -h $3
