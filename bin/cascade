@@ -9,7 +9,7 @@ T_MINHIT=0.97
 T_NUMSTAGES=5
 
 usage_exit() {
-    echo "Usage: $0 [-f feature type] [-w width] [-h height] [-m minHitRate] [-s numStages] dir_path"
+    echo "Usage: $0 [-f feature type] [-w width] [-h height] [-m minHitRate] [-s numStages] project_root"
     exit 1
 }
 

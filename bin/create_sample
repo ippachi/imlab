@@ -1,8 +1,29 @@
 #!/bin/bash
 
-if [ $# -ne 3 ]; then
-	echo 'Usage: "create_sample dir_path width height"'
-	exit 1
+T_W=24
+T_H=24
+
+usage_exit() {
+    echo "Usage: $0 [-w width] [-h height] project_root" 1>&2
+    exit 1
+}
+
+while getopts w:h: OPT
+do
+    case $OPT in
+        w)  T_W=$OPTARG
+            ;;
+        h)  T_H=$OPTARG
+            ;;
+        \?)  usage_exit
+             ;;
+    esac
+done
+
+shift $((OPTIND -1))
+
+if [ $# = 0 ]; then
+    usage_exit
 fi
 
-opencv_createsamples -info $1/src/pos.txt -vec $1/src/positive.vec -w $2 -h $3
+opencv_createsamples -info $1/src/pos.txt -vec $1/src/positive.vec -w $T_W -h $T_H
