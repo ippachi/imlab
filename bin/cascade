@@ -17,7 +17,7 @@ while getopts f:w:h:m:s: OPT
 do
     case $OPT in
         f)  $OPTARG
-            ;;       
+            ;;
         w)  T_W=$OPTARG
             ;;
         h)  T_H=$OPTARG
@@ -32,6 +32,10 @@ do
 done
 
 shift $((OPTIND -1))
+
+if [ $# = 0 ]; then
+    usage_exit
+fi
 
 T_DATA="$1/data/mdoel"
 T_VEC="$1/src/positive.vec"
