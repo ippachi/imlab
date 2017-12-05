@@ -6473,4 +6473,4 @@
 ./data/neg/6472.bmp
 ./data/neg/6473.bmp
 ./data/neg/6474.bmp
-./data/neg/
+./data/neg
