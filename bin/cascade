@@ -89,7 +89,7 @@ opencv_createsamples \
 -h $HEIGHT \
 -num $ACUTUAL_POS_NUM \
 
-mkdir -p $PROJECT_ROOT/model/$MODEL_NAME
+mkdir -p $PROJECT_ROOT/data/model/$MODEL_NAME
 
 cd $PROJECT_ROOT/src
 
