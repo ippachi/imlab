@@ -1,59 +1,105 @@
 #!/bin/bash
 
-DIR_PATH=$1
-T_FEATURE="LBP"
-T_MAXFALSE=0.1
-T_W=24
-T_H=24
-T_MINHIT=0.97
-T_NUMSTAGES=5
+set -e
 
 usage_exit() {
-    echo "Usage: $0 [-f feature type] [-w width] [-h height] [-m minHitRate] [-s numStages] project_root"
-    exit 1
+	echo "Usage: cascade"
+	echo "-p <project_root_dir_name>"
+	echo "[-v <vec_file_name = positive.vec>]"
+	echo "[-w <sampleWidth = 24>]"
+	echo "[-h <sampleHeight = 24>]"
+	echo "[-f <featureType = HOG>]"
+	echo "[-m <modelName = default>]"
+	exit 1
 }
 
-while getopts f:w:h:m:s: OPT
+error_handling() {
+	if [ -v $PROJECT_ROOT ]; then
+		echo -e "\e[31mError: Specify project root dirname\e[m" 1>&2
+		usage_exit
+	fi
+
+	local ERROR_FLAG=0
+
+	if [ ! -e $PROJECT_ROOT ]; then
+		echo -e "\e[31mError: $PROJECT_ROOT: No such project root directory\e[m" 1>&2
+		usage_exit
+	fi
+
+	if [ ! -e $POS_TXT ]; then
+		echo -e "\e[31mError: $POS_TXT: No such positive file\e[m" 1>&2
+		ERROR_FLAG=1
+	fi
+
+	if [ ! -e $NEG_TXT ]; then
+		echo -e "\e[31mError: $NEG_TXT: No such negative file\e[m" 1>&2
+		ERROR_FLAG=1
+	fi
+
+	if [ $ERROR_FLAG = 1 ]; then
+		exit 1
+	fi
+}
+
+# initial value
+WIDTH=24
+HEIGHT=24
+VEC_NAME=positive.vec
+FEATURE_TYPE=HOG
+MODEL_NAME=default
+
+# optgets
+while getopts v:w:h:f:p:m: OPT
 do
-    case $OPT in
-        f)  $OPTARG
-            ;;
-        w)  T_W=$OPTARG
-            ;;
-        h)  T_H=$OPTARG
-            ;;
-        m)  T_MINHIT=$OPTARG
-	      ;;
-        s)  T_NUMSTAGES=$OPTARG
-            ;;
-        \?)  usage_exit
-             ;;
-    esac
+	case $OPT in
+		v) 	VEC_NAME=$OPTARG
+			;;
+		w)	WIDTH=$OPTARG
+			;;
+		h)	HEIGHT=$OPTARG
+			;;
+		f)	FEATURE_TYPE=$OPTARG
+			;;
+		p)	PROJECT_ROOT=$OPTARG
+			;;
+		m)	MODEL_NAME=$OPTARG
+			;;
+		\?)	usage_exit
+			;;
+	esac
 done
 
-shift $((OPTIND -1))
 
-if [ $# = 0 ]; then
-    usage_exit
-fi
+POS_TXT=$PROJECT_ROOT/src/pos.txt
+NEG_TXT=$PROJECT_ROOT/src/neg.txt
 
-T_DATA="$1/data/mdoel"
-T_VEC="$1/src/positive.vec"
-T_BG="$1/src/neg.txt"
-T_NUMPOS=`wc -l $1/src/pos.txt | cut -d ' ' -f1`
-T_NUMNEG=`wc -l $1/src/neg.txt | cut -d ' ' -f1`
+error_handling
 
-$DIR_PATH/data
+# calculate sammple num
+ACUTUAL_POS_NUM=`wc -l $PROJECT_ROOT/src/pos.txt | cut -d' ' -f1`
+POS_NUM=$((`wc -l $PROJECT_ROOT/src/pos.txt | cut -d' ' -f1` * 85 / 100))
+NEG_NUM=$((`wc -l $PROJECT_ROOT/src/neg.txt | cut -d' ' -f1` * 95 / 100))
+
+
+# commands
+opencv_createsamples \
+-info $PROJECT_ROOT/src/pos.txt \
+-vec $PROJECT_ROOT/src/$VEC_NAME \
+-w $WIDTH \
+-h $HEIGHT \
+-num $ACUTUAL_POS_NUM \
+
+mkdir -p $PROJECT_ROOT/model/$MODEL_NAME
+
+cd $PROJECT_ROOT/src
 
 opencv_traincascade \
--data $DIR_PATH/data/model \
--vec $DIR_PATH/src/positive.vec \
--bg $DIR_PATH/src/neg.txt \
--numPos $T_NUMPOS \
--numNeg $T_NUMNEG \
--featureType $T_FEATURE \
--maxFalseAlarmRate $T_MINHIT \
--w $T_W \
--h $T_H \
--minHitRate $T_MINHIT \
--numStages $T_NUMSTAGES
+-data ../data/model/$MODEL_NAME \
+-vec $VEC_NAME \
+-bg neg.txt \
+-w $WIDTH \
+-h $HEIGHT \
+-featureType $FEATURE_TYPE \
+-numPos $POS_NUM \
+-numNeg $NEG_NUM \
+-bt RAB
