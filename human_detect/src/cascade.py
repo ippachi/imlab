@@ -4,7 +4,7 @@ import skvideo.io as sk
 
 cap = sk.FFmpegReader('../input/video/02.avi')
 
-Cascade = cv2.CascadeClassifier('../data/model/cascade.xml')
+Cascade = cv2.CascadeClassifier('../data/model/lbp_20/cascade.xml')
 
 i = 0
 for frame in cap.nextFrame():
