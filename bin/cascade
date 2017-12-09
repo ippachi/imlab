@@ -10,6 +10,7 @@ usage_exit() {
 	echo "[-h <sampleHeight = 24>]"
 	echo "[-f <featureType = HOG>]"
 	echo "[-m <modelName = default>]"
+	echo "[-s <numStages = 20>]"
 	exit 1
 }
 
@@ -47,9 +48,10 @@ HEIGHT=24
 VEC_NAME=positive.vec
 FEATURE_TYPE=HOG
 MODEL_NAME=default
+STAGE_NUM=5
 
 # optgets
-while getopts v:w:h:f:p:m: OPT
+while getopts v:w:h:f:p:m:s: OPT
 do
 	case $OPT in
 		v) 	VEC_NAME=$OPTARG
@@ -63,6 +65,8 @@ do
 		p)	PROJECT_ROOT=$OPTARG
 			;;
 		m)	MODEL_NAME=$OPTARG
+			;;
+		s)	STAGE_NUM=$OPTARG
 			;;
 		\?)	usage_exit
 			;;
@@ -103,6 +107,7 @@ opencv_traincascade \
 -h $HEIGHT \
 -numPos 3800 \
 -numNeg 6000 \
+-numStages $STAGE_NUM
 -bt RAB
 EOS
 `
@@ -111,3 +116,4 @@ eval $CMD
 
 TZ="Asia/Tokyo"
 echo "[`date`]    $CMD" >> ../command.log
+echo "[`date`]    $CMD" > ../data/model/$MODEL_NAME/create_by.txt

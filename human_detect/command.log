@@ -1,0 +1,8 @@
+[Sat Dec  9 14:37:21 UTC 2017]    opencv_traincascade -data ../data/model/test -vec positive.vec -bg neg.txt -featureType HOG -w 24 -h 24 -numPos 3800 -numNeg 6000 -numStages 3
+-bt RAB
+[Sat Dec  9 14:37:48 UTC 2017]    opencv_traincascade -data ../data/model/test -vec positive.vec -bg neg.txt -featureType HOG -w 24 -h 24 -numPos 3800 -numNeg 6000 -numStages 3
+-bt RAB
+[Sat Dec  9 14:38:08 UTC 2017]    opencv_traincascade -data ../data/model/test -vec positive.vec -bg neg.txt -featureType HOG -w 24 -h 24 -numPos 3800 -numNeg 6000 -numStages 3
+-bt RAB
+[Sat Dec  9 14:41:32 UTC 2017]    opencv_traincascade -data ../data/model/test -vec positive.vec -bg neg.txt -featureType HOG -w 24 -h 24 -numPos 3800 -numNeg 6000 -numStages 1
+-bt RAB
