@@ -93,8 +93,7 @@ mkdir -p $PROJECT_ROOT/data/model/$MODEL_NAME
 
 cd $PROJECT_ROOT/src
 
-TZ="Asia/Tokyo"
-
+CMD=`cat << EOS
 opencv_traincascade \
 -data ../data/model/$MODEL_NAME \
 -vec $VEC_NAME \
@@ -105,3 +104,10 @@ opencv_traincascade \
 -numPos 3800 \
 -numNeg 6000 \
 -bt RAB
+EOS
+`
+
+eval $CMD
+
+TZ="Asia/Tokyo"
+echo "[`date`]    $CMD" >> ../command.log
