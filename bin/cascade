@@ -93,13 +93,15 @@ mkdir -p $PROJECT_ROOT/data/model/$MODEL_NAME
 
 cd $PROJECT_ROOT/src
 
+TZ="Asia/Tokyo"
+
 opencv_traincascade \
 -data ../data/model/$MODEL_NAME \
 -vec $VEC_NAME \
 -bg neg.txt \
+-featureType $FEATURE_TYPE \
 -w $WIDTH \
 -h $HEIGHT \
--featureType $FEATURE_TYPE \
 -numPos 3800 \
 -numNeg 6000 \
 -bt RAB
