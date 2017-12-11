@@ -10,7 +10,10 @@ usage_exit() {
 	echo "[-h <sampleHeight = 24>]"
 	echo "[-f <featureType = HOG>]"
 	echo "[-m <modelName = default>]"
-	echo "[-s <numStages = 20>]"
+	echo "[-s <numStages = 5>]"
+	echo "[-o <numPos>]"
+	echo "[-n <numNeg>]"
+	echo "[-t <positiveFile = pos.txt>]"
 	exit 1
 }
 
@@ -27,8 +30,8 @@ error_handling() {
 		usage_exit
 	fi
 
-	if [ ! -e $POS_TXT ]; then
-		echo -e "\e[31mError: $POS_TXT: No such positive file\e[m" 1>&2
+	if [ ! -e $PROJECT_ROOT/src/$POS_TXT ]; then
+		echo -e "\e[31mError: $PORJECT_ROOT/src/$POS_TXT: No such positive file\e[m" 1>&2
 		ERROR_FLAG=1
 	fi
 
@@ -49,9 +52,10 @@ VEC_NAME=positive.vec
 FEATURE_TYPE=HOG
 MODEL_NAME=default
 STAGE_NUM=5
+POS_TXT=pos.txt
 
 # optgets
-while getopts v:w:h:f:p:m:s: OPT
+while getopts v:w:h:f:p:m:s:n:o:t: OPT
 do
 	case $OPT in
 		v) 	VEC_NAME=$OPTARG
@@ -68,26 +72,38 @@ do
 			;;
 		s)	STAGE_NUM=$OPTARG
 			;;
+		o)	POS_NUM=$OPTARG
+			;;
+		n)	NEG_NUM=$OPTARG
+			;;
+		t)	POS_TXT=$OPTARG
+			;;
 		\?)	usage_exit
 			;;
 	esac
 done
 
 
-POS_TXT=$PROJECT_ROOT/src/pos.txt
+POS_TXT=$POS_TXT
 NEG_TXT=$PROJECT_ROOT/src/neg.txt
 
 error_handling
 
 # calculate sammple num
-ACUTUAL_POS_NUM=`wc -l $PROJECT_ROOT/src/pos.txt | cut -d' ' -f1`
-POS_NUM=$((`wc -l $PROJECT_ROOT/src/pos.txt | cut -d' ' -f1` * 85 / 100))
-NEG_NUM=$((`wc -l $PROJECT_ROOT/src/neg.txt | cut -d' ' -f1` * 95 / 100))
+ACUTUAL_POS_NUM=`wc -l $PROJECT_ROOT/src/$POS_TXT | cut -d' ' -f1`
+
+if [ -v $POS_NUM ]; then
+  POS_NUM=$((`wc -l $PROJECT_ROOT/src/$POS_TXT | cut -d' ' -f1` * 85 / 100))
+fi
+
+if [ -v $NEG_NUM ]; then
+  NEG_NUM=$((`wc -l $PROJECT_ROOT/src/neg.txt | cut -d' ' -f1` * 95 / 100))
+fi
 
 
 # commands
 opencv_createsamples \
--info $PROJECT_ROOT/src/pos10.txt \
+-info $PROJECT_ROOT/src/$POS_TXT \
 -vec $PROJECT_ROOT/src/$VEC_NAME \
 -w $WIDTH \
 -h $HEIGHT \
@@ -105,8 +121,8 @@ opencv_traincascade \
 -featureType $FEATURE_TYPE \
 -w $WIDTH \
 -h $HEIGHT \
--numPos 3900 \
--numNeg 6475 \
+-numPos $POS_NUM \
+-numNeg $NEG_NUM \
 -numStages $STAGE_NUM \
 -bt RAB
 EOS
