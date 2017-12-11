@@ -107,7 +107,7 @@ opencv_traincascade \
 -h $HEIGHT \
 -numPos 3900 \
 -numNeg 6475 \
--numStages $STAGE_NUM
+-numStages $STAGE_NUM \
 -bt RAB
 EOS
 `

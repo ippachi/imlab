@@ -1,0 +1,1 @@
+[Mon Dec 11 17:08:12 UTC 2017]    opencv_traincascade -data ../data/model/hog_20_B -vec positive.vec -bg neg.txt -featureType HOG -w 40 -h 40 -numPos 3900 -numNeg 6475 -numStages 17 -bt RAB
