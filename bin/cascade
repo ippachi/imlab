@@ -87,7 +87,7 @@ NEG_NUM=$((`wc -l $PROJECT_ROOT/src/neg.txt | cut -d' ' -f1` * 95 / 100))
 
 # commands
 opencv_createsamples \
--info $PROJECT_ROOT/src/pos.txt \
+-info $PROJECT_ROOT/src/pos10.txt \
 -vec $PROJECT_ROOT/src/$VEC_NAME \
 -w $WIDTH \
 -h $HEIGHT \
@@ -105,8 +105,8 @@ opencv_traincascade \
 -featureType $FEATURE_TYPE \
 -w $WIDTH \
 -h $HEIGHT \
--numPos 3800 \
--numNeg 6000 \
+-numPos 3900 \
+-numNeg 6475 \
 -numStages $STAGE_NUM
 -bt RAB
 EOS
