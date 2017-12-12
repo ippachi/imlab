@@ -6,3 +6,5 @@
 -bt RAB
 [Sat Dec  9 14:41:32 UTC 2017]    opencv_traincascade -data ../data/model/test -vec positive.vec -bg neg.txt -featureType HOG -w 24 -h 24 -numPos 3800 -numNeg 6000 -numStages 1
 -bt RAB
+[Mon Dec 11 22:09:23 UTC 2017]    opencv_traincascade -data ../data/model/lbp_17 -vec positive.vec -bg neg.txt -featureType LBP -w 40 -h 40 -numPos 3900 -numNeg 6475 -numStages 17
+-bt RAB
