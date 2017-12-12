@@ -1,10 +1,8 @@
-[Sat Dec  9 14:37:21 UTC 2017]    opencv_traincascade -data ../data/model/test -vec positive.vec -bg neg.txt -featureType HOG -w 24 -h 24 -numPos 3800 -numNeg 6000 -numStages 3
--bt RAB
-[Sat Dec  9 14:37:48 UTC 2017]    opencv_traincascade -data ../data/model/test -vec positive.vec -bg neg.txt -featureType HOG -w 24 -h 24 -numPos 3800 -numNeg 6000 -numStages 3
--bt RAB
-[Sat Dec  9 14:38:08 UTC 2017]    opencv_traincascade -data ../data/model/test -vec positive.vec -bg neg.txt -featureType HOG -w 24 -h 24 -numPos 3800 -numNeg 6000 -numStages 3
--bt RAB
-[Sat Dec  9 14:41:32 UTC 2017]    opencv_traincascade -data ../data/model/test -vec positive.vec -bg neg.txt -featureType HOG -w 24 -h 24 -numPos 3800 -numNeg 6000 -numStages 1
--bt RAB
-[Mon Dec 11 22:09:23 UTC 2017]    opencv_traincascade -data ../data/model/lbp_17 -vec positive.vec -bg neg.txt -featureType LBP -w 40 -h 40 -numPos 3900 -numNeg 6475 -numStages 17
--bt RAB
+[Sat Dec  9 14:37:21 UTC 2017]    opencv_traincascade -data ../data/model/test -vec positive.vec -bg neg.txt -featureType HOG -w 24 -h 24 -numPos 3800 -numNeg 6000 -numStages 3 -bt RAB
+[Sat Dec  9 14:37:48 UTC 2017]    opencv_traincascade -data ../data/model/test -vec positive.vec -bg neg.txt -featureType HOG -w 24 -h 24 -numPos 3800 -numNeg 6000 -numStages 3 -bt RAB
+[Sat Dec  9 14:38:08 UTC 2017]    opencv_traincascade -data ../data/model/test -vec positive.vec -bg neg.txt -featureType HOG -w 24 -h 24 -numPos 3800 -numNeg 6000 -numStages 3 -bt RAB
+[Sat Dec  9 14:41:32 UTC 2017]    opencv_traincascade -data ../data/model/test -vec positive.vec -bg neg.txt -featureType HOG -w 24 -h 24 -numPos 3800 -numNeg 6000 -numStages 1 -bt RAB
+[Mon Dec 11 15:56:11 UTC 2017]    opencv_traincascade -data ../data/model/hog_20_B -vec positive.vec -bg neg.txt -featureType HOG -w 40 -h 40 -numPos 3900 -numNeg 6475 -numStages 17 -bt RAB
+[Mon Dec 11 16:03:43 UTC 2017]    opencv_traincascade -data ../data/model/hog_20_B -vec positive.vec -bg neg.txt -featureType HOG -w 40 -h 40 -numPos 3900 -numNeg 6475 -numStages 17 -bt RAB
+[Mon Dec 11 17:08:12 UTC 2017]    opencv_traincascade -data ../data/model/hog_20_B -vec positive.vec -bg neg.txt -featureType HOG -w 40 -h 40 -numPos 3900 -numNeg 6475 -numStages 17 -bt RAB
+[Mon Dec 11 22:09:23 UTC 2017]    opencv_traincascade -data ../data/model/lbp_17 -vec positive.vec -bg neg.txt -featureType LBP -w 40 -h 40 -numPos 3900 -numNeg 6475 -numStages 17 -bt RAB
