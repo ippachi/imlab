@@ -4,17 +4,17 @@ import skvideo.io as sk
 
 cap = sk.FFmpegReader('../input/video/02.avi')
 
-Cascade = cv2.CascadeClassifier('../data/model/lbp_20/cascade.xml')
+Cascade = cv2.CascadeClassifier('../data/model/lbp_17/cascade.xml')
 
 i = 0
 for frame in cap.nextFrame():
 
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    point = Cascade.detectMultiScale(gray, 1.06, 4, 0, (140, 140), (160, 160))
+    point = Cascade.detectMultiScale(gray, scaleFactor=1.06, minNeighbors=50, minSize=(90, 90), maxSize=(100, 100))
 
     if len(point) > 0 and i % 2 == 0:
-      for rect in point:
-        cv2.rectangle(gray, tuple(rect[0:2]), tuple(rect[0:2]+rect[2:4]), (0, 0,255), thickness=2)
+        for rect in point:
+            cv2.rectangle(gray, tuple(rect[0:2]), tuple(rect[0:2]+rect[2:4]), (0, 0,255), thickness=2)
     i += 1
 
     cv2.imshow('frame',gray)
