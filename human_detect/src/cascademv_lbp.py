@@ -10,7 +10,7 @@ i = 0
 for frame in cap.nextFrame():
 
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    point = Cascade.detectMultiScale(gray, scaleFactor=1.06, minNeighbors=50, minSize=(90, 90), maxSize=(100, 100))
+    point = Cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=100, minSize=(120, 120), maxSize=(140, 140))
 
     if len(point) > 0 and i % 2 == 0:
         for rect in point:
